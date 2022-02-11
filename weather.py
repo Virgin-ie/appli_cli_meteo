@@ -81,7 +81,7 @@ def build_weather_query(city_input, imperial=False):
     # imperial est True ou False
     units = "imperial" if imperial else "metric"
     url = (
-        f"{BASE_WEATHER_API_URL}?q={url_encoded_city_name}"
+        f"{BASE_WEATHER_API_URL}?q={url_encoded_city_name}&lang=fr"
         f"&units={units}&appid={api_key}"
     )
     return url
@@ -92,7 +92,7 @@ def build_weather_query(city_input, imperial=False):
 def _get_api_key():
     """
     Récupérer la clé API à partir du fichier de configuration.
-    Attend un fichier de configuration nommé 'secrets.ini' avec la structure
+    Attend un fichier de configuration nommé 'secrets.ini' avec la structure :
     [openweather]
     api_key=<your-openweather-api-key>
     """
@@ -131,7 +131,7 @@ def get_weather_data(query_url):
 
     # renvoi un appel à 'json.loads()' avec 'data' comme argument. La fonction renvoie un objet Python contenant
     # les informations JSON extraites de query_url. la gestion des erreurs 'try' et 'except' permet de lutter contre le
-    # JSON potentiellement malformé que l'API pourrait vous envoyer
+    # JSON potentiellement malformé que l'API pourrait envoyer
     try:
         return json.loads(data)
     except json.JSONDecodeError:
@@ -164,11 +164,10 @@ def display_weather_info(weather_data, imperial=False):
     print(f"{city:^{style.PADDING}}", end="")
     style.change_color(style.RESET)
 
-    # weather_symbol = emojis
-    weather_symbol, color = _select_weather_display_params(weather_id)
+    icon, color = _select_weather_display_params(weather_id)
 
     style.change_color(color)
-    print(f"\t{weather_symbol}", end=" ")
+    print(f"\t{icon:^{style.MINI_PADDING}}", end=" ")
     print(
         f"{weather_description.capitalize():^{style.PADDING}}",
         end=" "
@@ -177,7 +176,9 @@ def display_weather_info(weather_data, imperial=False):
 
     # imprime les infos. de température, puis utilise une expression conditionnelle qui repose sur la valeur booléenne
     # de 'imperial' pour décider d'imprimer un 'F'  pour Fahrenheit ou un 'C' pour Celsius
+    style.change_color(style.BLUE)
     print(f"({temperature}°{'F' if imperial else 'C'})")
+    style.change_color(style.RESET)
 
 
 # associe une couleur avec l'ID/code de la condition météologique
@@ -187,15 +188,15 @@ def _select_weather_display_params(weather_id):
     elif weather_id in DRIZZLE:
         display_params = ("☔", style.CYAN)
     elif weather_id in RAIN:
-        display_params = ("💧", style.BLUE)
+        display_params = ("🌧", style.BRIGHT_BLUE)
     elif weather_id in SNOW:
         display_params = ("❄", style.WHITE)
     elif weather_id in ATMOSPHERE:
-        display_params = ("🌌", style.BLUE)
+        display_params = ("🌌", style.BRIGHT_GREEN)
     elif weather_id in CLEAR:
         display_params = ("☀", style.YELLOW)
     elif weather_id in CLOUDY:
-        display_params = ("☁", style.WHITE)
+        display_params = ("☁", style.MAGENTA)
     else:  # Dans le cas où l'API ajoute de nouveaux codes météo
         display_params = ("🌡", style.RESET)
     return display_params
@@ -207,5 +208,4 @@ if __name__ == "__main__":
     # appel 'get_weather_data()' en passant le 'query_url' qui est généré avec 'build_weather_query()' puis enregistre
     # le dictionnaire dans 'weather_data'
     weather_data = get_weather_data(query_url)
-
     display_weather_info(weather_data, user_args.imperial)
