@@ -6,6 +6,7 @@ from urllib import error, parse, request
 
 import style
 
+# Pour lancer le programme : Terminal -> python weather.py nom_de_la_ville
 # une constante s'écrit en majuscule
 # défini 'BASE_WEATHER_API_URL' comme une constante vu que tous les appels API passerons par cette base de l'url
 BASE_WEATHER_API_URL = "http://api.openweathermap.org/data/2.5/weather"
@@ -43,7 +44,7 @@ def read_user_cli_args():
         "city", nargs="+", type=str, help="Entrer le nom de la ville"
     )
     # définit l'argument booléen facultatif 'imperial'
-    # définit l'argument du mot-clé 'action' sur 'store-true', ce qui signifie que la valeur de 'imperial' sera 'True'
+    # définit l'argument du mot-clé 'action' sur 'store_true', ce qui signifie que la valeur de 'imperial' sera 'True'
     # si les utilisateurs ajoutent l'indicateur facultatif, et 'False' s'ils ne le font pas
     parser.add_argument(
         "-i",
@@ -181,7 +182,8 @@ def display_weather_info(weather_data, imperial=False):
     style.change_color(style.RESET)
 
 
-# associe une couleur avec l'ID/code de la condition météologique
+# associe une couleur avec l'ID/code de la condition météorologique
+# associates a color with the weather condition ID/code
 def _select_weather_display_params(weather_id):
     if weather_id in THUNDERSTORM:
         display_params = ("🌩", style.RED)
