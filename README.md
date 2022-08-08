@@ -17,7 +17,7 @@ Lancer le programme dans le terminal avec : python weather.py <nom_de_la_ville/p
 - Utiliser des expressions conditionnelles
 
 ## Aperçu
-
+[appli_cli_meteo](images/appli_cli_meteo_references_grande_taille.png)
 
 ## Suite du projet
 - Personnaliser le style
