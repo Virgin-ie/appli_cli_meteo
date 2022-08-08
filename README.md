@@ -18,6 +18,7 @@ Lancer le programme dans le terminal avec : python weather.py <nom_de_la_ville/p
 
 ## Aperçu
 
+
 ## Suite du projet
 - Personnaliser le style
 - Enrichir le bulletin météo avec plus d'informations à partir de données de réponse JSON
@@ -26,7 +27,7 @@ Lancer le programme dans le terminal avec : python weather.py <nom_de_la_ville/p
 - Empaquetez la CLI pour la distribution à l'aide de Python zipapp ou créer un package à publier sur PyPi
 
 ## Auteur
-Virginie Evrard, 
+Virginie Evrard, mars 2022
 
 ## Remerciements
 J'ai réalisé mon application météo en suivant les explications d'un article sur Real Python.
